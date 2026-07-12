@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { decodePassphrase } from '@/lib/client-utils';
+import { decodePassphrase, randomString } from '@/lib/client-utils';
 import { DebugMode } from '@/lib/Debug';
 import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
@@ -47,7 +47,7 @@ export function PageClientImpl(props: {
   );
   const preJoinDefaults = React.useMemo(() => {
     return {
-      username: props.participantName ?? '',
+      username: props.participantName || `User-${randomString(4)}`,
       videoEnabled: true,
       audioEnabled: true,
     };

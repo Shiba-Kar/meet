@@ -65,3 +65,8 @@ h2 a {
 h2 a {
   text-decoration: none;
 }
+
+/* Hide username field in PreJoin screen as it is already captured on the landing page */
+.lk-prejoin .lk-username-container input#username {
+  display: none !important;
+}
