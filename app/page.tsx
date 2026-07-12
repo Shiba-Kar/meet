@@ -43,19 +43,37 @@ function Tabs(props: React.PropsWithChildren<{}>) {
 
 function DemoMeetingTab(props: { label: string }) {
   const router = useRouter();
+  const [roomName, setRoomName] = useState('');
   const [e2ee, setE2ee] = useState(false);
   const [sharedPassphrase, setSharedPassphrase] = useState(randomString(64));
-  const startMeeting = () => {
-    if (e2ee) {
-      router.push(`/rooms/${generateRoomId()}#${encodePassphrase(sharedPassphrase)}`);
-    } else {
-      router.push(`/rooms/${generateRoomId()}`);
+
+  React.useEffect(() => {
+    setRoomName(generateRoomId());
+  }, []);
+
+  const startMeeting = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (roomName.trim()) {
+      if (e2ee) {
+        router.push(`/rooms/${roomName.trim()}#${encodePassphrase(sharedPassphrase)}`);
+      } else {
+        router.push(`/rooms/${roomName.trim()}`);
+      }
     }
   };
   return (
-    <div className={styles.tabContent}>
+    <form className={styles.tabContent} onSubmit={startMeeting}>
       <p style={{ margin: 0 }}>Try LiveKit Meet for free with our live demo project.</p>
-      <button style={{ marginTop: '1rem' }} className="lk-button" onClick={startMeeting}>
+      <input
+        type="text"
+        id="roomName"
+        name="roomName"
+        placeholder="Room Name"
+        value={roomName}
+        onChange={(ev) => setRoomName(ev.target.value)}
+        required
+      />
+      <button style={{ marginTop: '1rem' }} className="lk-button" type="submit">
         Start Meeting
       </button>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -80,7 +98,7 @@ function DemoMeetingTab(props: { label: string }) {
           </div>
         )}
       </div>
-    </div>
+    </form>
   );
 }
 
