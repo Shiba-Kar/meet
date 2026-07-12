@@ -5,6 +5,7 @@ const nextConfig = {
   images: {
     formats: ['image/webp'],
   },
+  turbopack: {},
   webpack: (config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) => {
     // Important: return the modified config
     config.module.rules.push({

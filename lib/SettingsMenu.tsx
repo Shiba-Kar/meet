@@ -43,7 +43,10 @@ export function SettingsMenu(props: SettingsMenuProps) {
 
   React.useEffect(() => {
     if (initialRecStatus !== isRecording) {
-      setProcessingRecRequest(false);
+      const timer = setTimeout(() => {
+        setProcessingRecRequest(false);
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, [isRecording, initialRecStatus]);
 
